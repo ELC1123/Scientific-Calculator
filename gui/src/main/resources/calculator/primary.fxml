@@ -34,37 +34,6 @@
                </VBox>
             </Tab>
 
-            <!-- Exponent (will make better layout next time?) -->
-            <Tab text = "Exponent" closable="false">
-               <VBox alignment = "CENTER" spacing = "10">
-                  <padding>
-                     <Insets top="20.0"/>
-                  </padding>
-
-                  <TextField fx:id = "inputBase" promptText = "Enter base"/>
-                  <TextField fx:id = "inputExponent" promptText = "Enter exponent"/>
-
-                  <HBox spacing = "10" alignment = "CENTER">
-                     <children>
-                        <Button text = "Exponent" onAction = "#handleExponent"/>
-                     </children>
-                  </HBox>
-               </VBox>
-            </Tab>
-
-            <!-- Factorial Tab -->
-            <Tab text = "Factorial" closable="false">
-               <VBox alignment = "CENTER" spacing = "10">
-                  <TextField fx:id = "inputFactorial" promptText = "Enter non-negative integer"/>
-
-                  <HBox spacing = "10" alignment = "CENTER">
-                     <children>
-                        <Button text = "Factorial" onAction = "#handleFactorial"/>
-                     </children>
-                  </HBox>
-               </VBox>
-            </Tab>
-
             <!-- Trigonometric Functions Tab -->
             <Tab text = "Trigonometric Functions" closable="false">
                <VBox alignment = "CENTER" spacing = "10">
@@ -120,14 +89,24 @@
             <!-- Other Functions -->
             <Tab text = "More Functions" closable="false">
                <VBox alignment = "CENTER" spacing = "10">
-                  <TextField fx:id = "inputMisc" promptText = "Enter number/value"/>
+                  <TextField fx:id = "inputX" promptText = "Enter number/value"/>
+                  <TextField fx:id = "inputY" promptText = "Enter Extra Value (for nth root, log base, exponent)"/>
 
                   <HBox spacing = "10" alignment = "CENTER">
                      <children>
                         <Button text = "Abs. Value" onAction = "#handleAbsValue"/>
                         <Button text = "Square Root" onAction = "#handleSquareRoot"/>
                         <Button text = "Log10" onAction = "#handleLog10"/>
-                        <Button text = "ln" onAction = "#handleNLog"/>
+                        <Button text = "ln" onAction = "#handleLN"/>
+                        <Button text = "Factorial" onAction = "#handleFactorial"/>
+                     </children>
+                  </HBox>
+
+                  <HBox spacing = "10" alignment = "CENTER">
+                     <children>
+                        <Button text = "Exponent" onAction = "#handleExponent"/>
+                        <Button text = "Nth Root" onAction = "#handleNthRoot"/>
+                        <Button text = "Custom Log" onAction = "#handleCustomLog"/>
                      </children>
                   </HBox>
                </VBox>
@@ -139,9 +118,9 @@
       <Label fx:id = "resultLabel" text = "Result is displayed here"/>
       <Button fx:id = "history" text = "View History" onAction = "#handleViewHistory" />
       <ToggleButton fx:id = "themeToggle" text = "Dark Mode" onAction = "#handleThemeToggle">
-         <toolTip>
+         <tooltip>
             <Tooltip text="Click to toggle between Light and Dark Mode"/>
-         </toolTip>
+         </tooltip>
       </ToggleButton>
    </children>
    <padding>

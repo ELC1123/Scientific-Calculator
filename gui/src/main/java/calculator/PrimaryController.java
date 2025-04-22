@@ -15,15 +15,12 @@ import javafx.stage.Stage;
 
 public class PrimaryController {
 
+    // =======================
+    // Initialization & Setup
+    // =======================
+
     // Initialization of Textfields and Labels
-    @FXML private TextField inputA;
-    @FXML private TextField inputB;
-    @FXML private TextField inputBase;
-    @FXML private TextField inputExponent;
-    @FXML private TextField inputFactorial;
-    @FXML private TextField inputTrigo;
-    @FXML private TextField inputMisc;
-    @FXML private TextField inputConversion;
+    @FXML private TextField inputA, inputB, inputTrigo, inputX, inputY, inputConversion;
 
     @FXML private ChoiceBox<String> fromBaseChoice;
     @FXML private ChoiceBox<String> toBaseChoice;
@@ -59,17 +56,15 @@ public class PrimaryController {
         this.scene = scene;
     }
 
-    public void displayResult(double result) {
-        if(result == (int) result) {
-            resultLabel.setText("Result: " + (int) result);
-        }
-        else {
-            resultLabel.setText(String.format("Result: %.4f", result));
-        }
-    }
+    // =======================
+    // Arithmetic Operations
+    // =======================
 
-    // Function to add 2 numbers
+    // Addition
     public void handleAdd() {
+        if(checkEmpty(inputA) || checkEmpty(inputB)) {
+            return;
+        }
         try {
             double a = Double.parseDouble(inputA.getText().trim());
             double b = Double.parseDouble(inputB.getText().trim());
@@ -82,8 +77,11 @@ public class PrimaryController {
         }
     }
 
-    // Function to subtract 2 numbers
+    // Subtraction
     public void handleSubtract() {
+        if(checkEmpty(inputA) || checkEmpty(inputB)) {
+            return;
+        }
         try {
             double a = Double.parseDouble(inputA.getText().trim());
             double b = Double.parseDouble(inputB.getText().trim());
@@ -96,8 +94,11 @@ public class PrimaryController {
         }
     }
 
-    // Function to multiply 2 numbers
+    // Multiply
     public void handleMultiply() {
+        if(checkEmpty(inputA) || checkEmpty(inputB)) {
+            return;
+        }
         try {
             double a = Double.parseDouble(inputA.getText().trim());
             double b = Double.parseDouble(inputB.getText().trim());
@@ -110,8 +111,11 @@ public class PrimaryController {
         }
     }
     
-    // Function to divide 2 numbers
+    // Divide
     public void handleDivide() {
+        if(checkEmpty(inputA) || checkEmpty(inputB)) {
+            return;
+        }
         try {
             double a = Double.parseDouble(inputA.getText().trim());
             double b = Double.parseDouble(inputB.getText().trim());
@@ -126,8 +130,11 @@ public class PrimaryController {
         }
     }
 
-    // Function to get the modulo of 2 numbers
+    // Modulo
     public void handleModulo() {
+        if(checkEmpty(inputA) || checkEmpty(inputB)) {
+            return;
+        }
         try {
             double a = Double.parseDouble(inputA.getText().trim());
             double b = Double.parseDouble(inputB.getText().trim());
@@ -142,43 +149,25 @@ public class PrimaryController {
         }
     }
 
-    // Function to calculate result given an exponent and a base value
-    public void handleExponent() {
-        try {
-            double a = Double.parseDouble(inputBase.getText().trim());
-            double b = Double.parseDouble(inputExponent.getText().trim());
-            double result = functions.exponent(a, b);
-
-            displayResult(result);
-            HistoryController.addToHistory(a + "^" + b + " = " + result);
-        } catch (NumberFormatException e) {
-            resultLabel.setText("Invalid Input");
-        }
-    }
-
-    // Function to get the factorial of a number
-    public void handleFactorial() {
-        try {
-            int a = Integer.parseInt(inputFactorial.getText().trim());
-            double result = functions.factorial(a);
-
-            resultLabel.setText("Result: " + result);
-            HistoryController.addToHistory(a + "! = " + result);
-        } catch (NumberFormatException e) {
-            resultLabel.setText("Invalid Input");
-        }
-    }
+    // =========================
+    // Trigonometric Functions
+    // =========================
 
     // Function to get sine of given degree/radian
     public void handleSine() {
+        if(checkEmpty(inputTrigo)) {
+            return;
+        }
         try {
             double a = Double.parseDouble(inputTrigo.getText().trim());
+
             if (!angleToggle.isSelected()) { // Convert to radians if in Degrees mode
                 a = functions.degToRad(a);
             }
-            double result = functions.sine(a);
 
+            double result = functions.sine(a);
             resultLabel.setText("Result: " + result);
+
             if(!angleToggle.isSelected()) {
                 HistoryController.addToHistory("sine(" + a + "rad) = " + result);
             }
@@ -192,14 +181,19 @@ public class PrimaryController {
 
     // Function to get cosine of given degree/radian
     public void handleCosine() {
+        if(checkEmpty(inputTrigo)) {
+            return;
+        }
         try {
             double a = Double.parseDouble(inputTrigo.getText().trim());
+
             if (!angleToggle.isSelected()) { 
                 a = functions.degToRad(a);
             }
-            double result = functions.cosine(a);
 
+            double result = functions.cosine(a);
             resultLabel.setText("Result: " + result);
+
             if(!angleToggle.isSelected()) {
                 HistoryController.addToHistory("cosine(" + a + "rad) = " + result);
             }
@@ -213,14 +207,19 @@ public class PrimaryController {
 
     // Function to get tangent of given degree/radian
     public void handleTangent() {
+        if(checkEmpty(inputTrigo)) {
+            return;
+        }
         try {
             double a = Double.parseDouble(inputTrigo.getText().trim());
+
             if (!angleToggle.isSelected()) { 
                 a = functions.degToRad(a);
             }
-            double result = functions.tangent(a);
 
+            double result = functions.tangent(a);
             resultLabel.setText("Result: " + result);
+
             if(!angleToggle.isSelected()) {
                 HistoryController.addToHistory("tangent(" + a + "rad) = " + result);
             }
@@ -232,12 +231,19 @@ public class PrimaryController {
         }
     }
     
+    // ============================
+    // Inverse Trigonometric Functions
+    // ============================
+
     // Function to get the inverse sine of given degree/radian
     public void handleInvSine() {
+        if(checkEmpty(inputTrigo)) {
+            return;
+        }
         try {
             double a = Double.parseDouble(inputTrigo.getText().trim());
             if (a < -1 || a > 1) {
-                resultLabel.setText("Invalid Input.");
+                resultLabel.setText("For this function, input must be from -1 to 1 only.");
                 return;
             }
             double radians = functions.invSine(a);
@@ -252,10 +258,13 @@ public class PrimaryController {
 
     // Function to get the inverse cosine of given degree/radian
     public void handleInvCosine() {
+        if(checkEmpty(inputTrigo)) {
+            return;
+        }
         try {
             double a = Double.parseDouble(inputTrigo.getText().trim());
             if (a < -1 || a > 1) {
-                resultLabel.setText("Invalid Input.");
+                resultLabel.setText("For this function, input must be from -1 to 1 only.");
                 return;
             }
             double radians = functions.invCosine(a);
@@ -270,6 +279,9 @@ public class PrimaryController {
 
     // Function to get the inverse tangent of given degree/radian
     public void handleInvTangent() {
+        if(checkEmpty(inputTrigo)) {
+            return;
+        }
         try {
             double a = Double.parseDouble(inputTrigo.getText().trim());
             double radians = functions.invTangent(a);
@@ -291,12 +303,55 @@ public class PrimaryController {
         }
     }
 
+    // ===================================
+    // Exponent, Factorial, & Abs. Value
+    // ===================================
+
+    // Function to calculate result given an exponent and a base value
+    public void handleExponent() {
+        if(checkEmpty(inputX) || checkEmpty(inputY)) {
+            return;
+        }
+        try {
+            double a = Double.parseDouble(inputX.getText().trim());
+            double b = Double.parseDouble(inputY.getText().trim());
+            double result = functions.exponent(a, b);
+
+            displayResult(result);
+            HistoryController.addToHistory(a + "^" + b + " = " + result);
+        } catch (NumberFormatException e) {
+            resultLabel.setText("Invalid Input");
+        }
+    }
+
+    // Function to get the factorial of a number
+    public void handleFactorial() {
+        if(checkEmpty(inputX)) {
+            return;
+        }
+        try {
+            int a = Integer.parseInt(inputX.getText().trim());
+            if (a < 0) {
+                resultLabel.setText("Input must be a positive integer");
+                return;
+            }
+
+            double result = functions.factorial(a);
+            resultLabel.setText("Result: " + result);
+            HistoryController.addToHistory(a + "! = " + result);
+        } catch (NumberFormatException e) {
+            resultLabel.setText("Invalid Input");
+        }
+    }
+
     // Function to get the absolute value of the input
     public void handleAbsValue() {
+        if(checkEmpty(inputX)) {
+            return;
+        }
         try {
-            double a = Double.parseDouble(inputMisc.getText().trim());
+            double a = Double.parseDouble(inputX.getText().trim());
             double result = functions.absValue(a);
-
             resultLabel.setText("Result: " + result);
             HistoryController.addToHistory("|" + a + "| = " + result);
         } catch (NumberFormatException e) {
@@ -304,49 +359,130 @@ public class PrimaryController {
         }
     }
 
+    // ===================
+    // Square and Nth Roots
+    // ===================
+
     // Function to get the square root of the input
     public void handleSquareRoot() {
+        if(checkEmpty(inputX)) {
+            return;
+        }
         try {
-            double a = Double.parseDouble(inputMisc.getText().trim());
-            double result = functions.nthRoot(a, 2);
+            double a = Double.parseDouble(inputX.getText().trim());
+            if(a < 0) {
+                resultLabel.setText("Invalid Input");
+                return;
+            }
 
+            double result = functions.nthRoot(a, 2);
             resultLabel.setText("Result: " + result);
             HistoryController.addToHistory("sqrt(" + a + ") = " + result);
         } catch (NumberFormatException e) {
             resultLabel.setText("Invalid Input");
         }
     }
-    
-    // Function to get the log10 of an input
-    public void handleLog10() {
+
+    // Function to get the nth root of a given root and value
+    public void handleNthRoot() {
+        if(checkEmpty(inputX) || checkEmpty(inputY)) {
+            return;
+        }
         try {
-            double a = Double.parseDouble(inputMisc.getText().trim());
-            if(a > 0) {
-                double result = functions.logarithm(a, 10);
-                resultLabel.setText("Result: " + result);
-                HistoryController.addToHistory("log10(" + a + ") = " + result);
+            double value = Double.parseDouble(inputX.getText().trim());
+            double root = Double.parseDouble(inputY.getText().trim());
+
+            if(root == 0) {
+                resultLabel.setText("Root cannot be 0");
+                return;
             }
-            else {
-                resultLabel.setText("Invalid Input");
+            if(value < 0 && root % 2 == 0) {
+                resultLabel.setText("Even root of negative number is undefined.");
+                return;
             }
 
+            double result = functions.nthRoot(value, root);
+            resultLabel.setText("Result: " + result);
+            HistoryController.addToHistory("root(" + value + ", " + root + ") = " + result);
         } catch (NumberFormatException e) {
             resultLabel.setText("Invalid Input");
         }
     }
 
-    // Function to get the natural logarithm of an input
-    public void handleNLog() {
-        try {
-            double a = Double.parseDouble(inputMisc.getText().trim());
-            double result = functions.naturalLogarithm(a);
+    // =====================
+    // Logarithmic Functions
+    // =====================
 
+    // Function to get the log10 of an input
+    public void handleLog10() {
+        if(checkEmpty(inputX)) {
+            return;
+        }
+        try {
+            double a = Double.parseDouble(inputX.getText().trim());
+            if(a <= 0) {
+                resultLabel.setText("Input must be a positive number");
+                return;
+            }
+
+            double result = functions.logarithm(a, 10);
+            resultLabel.setText("Result: " + result);
+            HistoryController.addToHistory("log10(" + a + ") = " + result);
+        } catch (NumberFormatException e) {
+            if(isEmpty(inputX)) {
+                resultLabel.setText("Input is required");
+            }
+            else {
+                resultLabel.setText("Invalid Input");
+            }
+        }
+    }
+
+    // Function to get the natural logarithm of an input
+    public void handleLN() {
+        if(checkEmpty(inputX)) {
+            return;
+        }
+        try {
+            double a = Double.parseDouble(inputX.getText().trim());
+            if(a <= 0) {
+                resultLabel.setText("For this function, input must be a positive number");
+                return;
+            }
+
+            double result = functions.naturalLogarithm(a);
             resultLabel.setText("Result: " + result);
             HistoryController.addToHistory("ln(" + a + ") = " + result);
         } catch (NumberFormatException e) {
             resultLabel.setText("Invalid Input");
         }
     }
+
+    // Function to calculate the custom log of a given base and value
+    public void handleCustomLog() {
+        if(checkEmpty(inputX) || checkEmpty(inputY)) {
+            return;
+        }
+        try {
+            double value = Double.parseDouble(inputX.getText().trim());
+            double base = Double.parseDouble(inputY.getText().trim());
+
+            if(value <= 0 || base <= 1) {
+                resultLabel.setText("For this function, base must be > 1, value must be > 0");
+                return;
+            }
+
+            double result = functions.logarithm(value, base);
+            resultLabel.setText("Result: " + result);
+            HistoryController.addToHistory("log_" + base + "(" + value + ") = " + result);
+        } catch (NumberFormatException e) {
+            resultLabel.setText("Invalid Input");
+        }
+    }
+
+    // ===========================
+    // Number Base Conversions
+    // ===========================
 
     // Function to get the base suffix of a number system
     private String getBaseSuffix(String baseName) {
@@ -357,7 +493,7 @@ public class PrimaryController {
                 return "o";
             case "Decimal":
                 return "d";
-            case "Hexadecimal":
+            case "Hex":
                 return "h";
             default:
                 return "";
@@ -366,6 +502,10 @@ public class PrimaryController {
 
     // Function to do the number conversions
     public void handleConversions() {
+        if(checkEmpty(inputConversion)) {
+            return;
+        }
+
         try {
             String input = inputConversion.getText().trim();
             String fromBase = fromBaseChoice.getValue();
@@ -443,22 +583,24 @@ public class PrimaryController {
             
             resultLabel.setText("Result: " + result);
         } catch (NumberFormatException e) {
-        resultLabel.setText("Invalid number format.");
+            resultLabel.setText("Invalid Input");
         } catch (Exception e) {
             resultLabel.setText("Error: " + e.getMessage());
         }
     }
 
+    // ======================
+    // GUI Utility Functions
+    // ======================
+
     // Function to clear displays
     public void handleClear() {
         inputA.clear();
         inputB.clear();
-        inputBase.clear();
-        inputExponent.clear();
-        inputFactorial.clear();
         inputTrigo.clear();
         inputConversion.clear();
-        inputMisc.clear();
+        inputX.clear();
+        inputY.clear();
 
         fromBaseChoice.setValue("Decimal");  // default selection
         toBaseChoice.setValue("Binary");
@@ -499,6 +641,27 @@ public class PrimaryController {
         else {
             themeToggle.setText("Dark Mode");
             scene.getStylesheets().clear();
+        }
+    }
+
+    private boolean isEmpty(TextField field) {
+        return field.getText() == null || field.getText().trim().isEmpty();
+    }
+
+    private boolean checkEmpty(TextField field) {
+        if(isEmpty(field)) {
+            resultLabel.setText("Input is Required");
+            return true;
+        }
+        return false;
+    }
+
+    public void displayResult(double result) {
+        if(result == (int) result) {
+            resultLabel.setText("Result: " + (int) result);
+        }
+        else {
+            resultLabel.setText(String.format("Result: %.4f", result));
         }
     }
 }
