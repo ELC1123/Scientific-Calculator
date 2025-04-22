@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calculator.PrimaryController">
+   <children>
+      <Label text="Calculator" />
+
+      <!-- Layout Stuff -->
+      <TabPane fx:id = "tabPane">
+         <tabs>
+            <!-- Basic Operations-->
+            <Tab text = "Basic" closable="false">
+               <VBox alignment = "CENTER" spacing = "10">
+                  <!-- Padding for space between 1st input field and tabs-->
+                  <padding>
+                     <Insets top="20.0" />
+                  </padding>
+
+                  <TextField fx:id = "inputA" promptText = "Enter first number"/>
+                  <TextField fx:id = "inputB" promptText = "Enter second number"/>
+
+                  <HBox spacing = "10" alignment = "CENTER">
+                     <children>
+                        <Button text = "Add" onAction = "#handleAdd"/>
+                        <Button text = "Subtract" onAction = "#handleSubtract"/>
+                        <Button text = "Multiply" onAction = "#handleMultiply"/>
+                        <Button text = "Divide" onAction = "#handleDivide"/>
+                        <Button text = "Modulo" onAction = "#handleModulo"/>
+                     </children>
+                  </HBox>
+               </VBox>
+            </Tab>
+
+            <!-- Exponent (will make better layout next time?) -->
+            <Tab text = "Exponent" closable="false">
+               <VBox alignment = "CENTER" spacing = "10">
+                  <padding>
+                     <Insets top="20.0"/>
+                  </padding>
+
+                  <TextField fx:id = "inputBase" promptText = "Enter base"/>
+                  <TextField fx:id = "inputExponent" promptText = "Enter exponent"/>
+
+                  <HBox spacing = "10" alignment = "CENTER">
+                     <children>
+                        <Button text = "Exponent" onAction = "#handleExponent"/>
+                     </children>
+                  </HBox>
+               </VBox>
+            </Tab>
+
+            <!-- Factorial Tab -->
+            <Tab text = "Factorial" closable="false">
+               <VBox alignment = "CENTER" spacing = "10">
+                  <TextField fx:id = "inputFactorial" promptText = "Enter non-negative integer"/>
+
+                  <HBox spacing = "10" alignment = "CENTER">
+                     <children>
+                        <Button text = "Factorial" onAction = "#handleFactorial"/>
+                     </children>
+                  </HBox>
+               </VBox>
+            </Tab>
+
+            <!-- Trigonometric Functions Tab -->
+            <Tab text = "Trigonometric Functions" closable="false">
+               <VBox alignment = "CENTER" spacing = "10">
+                  <padding>
+                     <Insets top="35.0"/>
+                  </padding>
+
+                  <TextField fx:id = "inputTrigo" promptText = "Enter angle (° or rad) or ratio (for inverse)"/>
+                  <ToggleButton fx:id="angleToggle" text="Degrees" onAction="#handleAngleToggle">
+                     <tooltip>
+                        <Tooltip text="Click to toggle between Degrees and Radians"/>
+                     </tooltip>
+                  </ToggleButton>
+
+                  <HBox spacing = "10" alignment = "CENTER">
+                     <children>
+                        <Button text = "Sine" onAction = "#handleSine"/>
+                        <Button text = "Cosine" onAction = "#handleCosine"/>
+                        <Button text = "Tangent" onAction = "#handleTangent"/>
+                     </children>
+                  </HBox>
+                  <HBox spacing = "10" alignment = "CENTER">
+                     <children>
+                        <Button text = "Inv. Sine" onAction = "#handleInvSine"/>
+                        <Button text = "Inv. Cosine" onAction = "#handleInvCosine"/>
+                        <Button text = "Inv. Tangent" onAction = "#handleInvTangent"/>
+                     </children>
+                  </HBox>
+               </VBox>
+            </Tab>
+
+            <!-- Number Base Conversions -->
+            <Tab text = "Num. Conversions" closable = "false">
+               <VBox alignment = "CENTER" spacing = "10">
+                  <padding>
+                     <Insets top = "20.0"/>
+                  </padding>
+
+                  <TextField fx:id = "inputConversion" promptText = "Enter value to convert"/>
+
+                  <HBox spacing = "10" alignment = "CENTER">
+                     <children>
+                        <ChoiceBox fx:id = "fromBaseChoice"/>
+                        <Label text = "→"/>
+                        <ChoiceBox fx:id = "toBaseChoice"/>
+                     </children>
+                  </HBox>
+
+                  <Button text= "Convert" onAction = "#handleConversions"/>
+               </VBox>
+            </Tab>
+
+            <!-- Other Functions -->
+            <Tab text = "More Functions" closable="false">
+               <VBox alignment = "CENTER" spacing = "10">
+                  <TextField fx:id = "inputMisc" promptText = "Enter number/value"/>
+
+                  <HBox spacing = "10" alignment = "CENTER">
+                     <children>
+                        <Button text = "Abs. Value" onAction = "#handleAbsValue"/>
+                        <Button text = "Square Root" onAction = "#handleSquareRoot"/>
+                        <Button text = "Log10" onAction = "#handleLog10"/>
+                        <Button text = "ln" onAction = "#handleNLog"/>
+                     </children>
+                  </HBox>
+               </VBox>
+            </Tab>
+         </tabs>
+      </TabPane>
+
+      <Button fx:id = "clearButton" text="Clear All" onAction="#handleClear" />
+      <Label fx:id = "resultLabel" text = "Result is displayed here"/>
+      <Button fx:id = "history" text = "View History" onAction = "#handleViewHistory" />
+      <ToggleButton fx:id = "themeToggle" text = "Dark Mode" onAction = "#handleThemeToggle">
+         <toolTip>
+            <Tooltip text="Click to toggle between Light and Dark Mode"/>
+         </toolTip>
+      </ToggleButton>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>
