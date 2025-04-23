@@ -63,7 +63,7 @@ mvn clean javafx:run
 ### Dark Mode Toggle
 ![Dark Mode](images/DarkMode.png)
 
-## Folder Structure
+## 📁 Folder Structure
 ```
 SciCal/
 ├── .vscode/
