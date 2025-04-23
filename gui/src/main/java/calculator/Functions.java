@@ -1,7 +1,5 @@
 package calculator;
 
-import java.lang.Math;
-
 public class Functions {
     /** 
      *  add Function: Adds two double values and returns the sum.
@@ -275,7 +273,7 @@ public class Functions {
      * 
      * @param celsius       Celsius to be converted
      * 
-     * @return          the converted degree value
+     * @return          the converted fahrenheit value
      */
     public double celsiusToFahrenheit(double celsius) {
         double result = (celsius * 1.8) + 32;
@@ -291,6 +289,60 @@ public class Functions {
      */
     public double fahrenheitToCelsius(double fahrenheit) {
         double result = (fahrenheit - 32) * 5/9;
+        return result;
+    }
+
+    /**
+     * celsiusToKelvin Function: Converts Celsius to Kelvin
+     * 
+     * @param celsius       Celsius to be converted
+     * 
+     * @return          the converted kelvin value
+     */
+    public double celsiusToKelvin(double celsius) {
+        double result = celsius +  273.15;
+        return result;
+    }
+
+    /**
+     * fahrenheitToKelvin Function: Converts Fahrenheit to Kelvin
+     * 
+     * @param fahrenheit     Fahrenheit to be converted
+     * 
+     * @return          the converted kelvin value
+     */
+    public double fahrenheitToKelvin(double fahrenheit) {
+        double result = (fahrenheit - 32) * 5/9 + 273.15;
+        return result;
+    }
+
+    /**
+     * kelvinToCelsius Function: Converts Kelvin to Celsius
+     * 
+     * @param kelvin    Kelvin to be converted
+     * 
+     * @return          the converted celsius value
+     */
+    public double kelvinToCelsius(double kelvin) {
+        if(kelvin < 0) {
+            throw new IllegalArgumentException("Kelvin cannot be negative.");
+        }
+        double result = kelvin - 273.15;
+        return result;
+    }
+
+    /**
+     * kelvinToFahrenheit Function: Converts Kelvin to Fahrenheit
+     * 
+     * @param kelvin      kelvin to be converted
+     * 
+     * @return          the converted fahrenheit value
+     */
+    public double kelvinToFahrenheit(double kelvin) {
+        if(kelvin < 0) {
+            throw new IllegalArgumentException("Kelvin cannot be negative.");
+        }
+        double result = (kelvin - 273.15) * 1.8 + 32;
         return result;
     }
 

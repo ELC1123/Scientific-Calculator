@@ -20,15 +20,10 @@ public class PrimaryController {
     // =======================
 
     // Initialization of Textfields and Labels
-    @FXML private TextField inputA, inputB, inputTrigo, inputX, inputY, inputConversion;
-
-    @FXML private ChoiceBox<String> fromBaseChoice;
-    @FXML private ChoiceBox<String> toBaseChoice;
-    @FXML private ToggleButton angleToggle;
-    @FXML private ToggleButton themeToggle;
-    
+    @FXML private TextField inputA, inputB, inputTrigo, inputX, inputY, inputConversion, inputTempConversion;
+    @FXML private ChoiceBox<String> fromBaseChoice, toBaseChoice, fromTempChoice, toTempChoice;
+    @FXML private ToggleButton angleToggle, themeToggle;
     @FXML private TabPane tabPane;
-
     @FXML private Label resultLabel;
 
     // Initialize functions 
@@ -50,6 +45,12 @@ public class PrimaryController {
 
         fromBaseChoice.setValue("Decimal");  // default selection
         toBaseChoice.setValue("Binary");
+
+        fromTempChoice.getItems().addAll("Celsius", "Fahrenheit", "Kelvin");
+        toTempChoice.getItems().addAll("Celsius", "Fahrenheit", "Kelvin");
+
+        fromTempChoice.setValue("Celsius");
+        toTempChoice.setValue("Fahrenheit");
     }
 
     public void setScene(Scene scene) {
@@ -589,6 +590,99 @@ public class PrimaryController {
         }
     }
 
+    // ===========================
+    // Temperature Conversions
+    // ===========================
+
+    // Function to get the base suffix of a number system
+    private String getTempSuffix(String tempName) {
+        switch (tempName) {
+            case "Celsius":
+                return "°C";
+            case "Fahrenheit":
+                return "°F";
+            case "Kelvin":
+                return "°K";
+            default:
+                return "";
+        }
+    }
+
+    public void handleTempConversion() {
+        if(checkEmpty(inputTempConversion)) {
+            return;
+        }
+
+        try {
+            String inputString = inputTempConversion.getText().trim();
+            String fromTemp = fromTempChoice.getValue();
+            String toTemp = toTempChoice.getValue();
+            double result = 0.0;
+
+            String fromSuffix = getTempSuffix(fromTemp);
+            String toSuffix = getTempSuffix(toTemp);
+
+            double input = Double.parseDouble(inputString);
+
+            // Input Validation
+            if(fromTemp.equals("Kelvin") && input < 0) {
+                resultLabel.setText("Invalid Kelvin input, must be greater than 0");
+                return;
+            }
+
+            if(fromTemp.equals("Celsius")) {
+                switch (toTemp) {
+                    case "Celsius":
+                        result = input;
+                        break;
+                    case "Fahrenheit":
+                        result = functions.celsiusToFahrenheit(input);
+                        break;
+                    case "Kelvin":
+                        result = functions.celsiusToKelvin(input);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if(fromTemp.equals("Fahrenheit")) {
+                switch (toTemp) {
+                    case "Celsius":
+                        result = functions.fahrenheitToCelsius(input);
+                        break;
+                    case "Fahrenheit":
+                        result = input;
+                        break;
+                    case "Kelvin":
+                        result = functions.fahrenheitToKelvin(input);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else {
+                switch (toTemp) {
+                    case "Celsius":
+                        result = functions.kelvinToCelsius(input);
+                        break;
+                    case "Fahrenheit":
+                        result = functions.kelvinToFahrenheit(input);
+                        break;
+                    case "Kelvin":
+                        result = input;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            resultLabel.setText("Result: " + result);
+            HistoryController.addToHistory(input + fromSuffix+ " = " + result + toSuffix);
+
+        } catch (NumberFormatException e) {
+            resultLabel.setText("Invalid Input");
+        }
+    }
+
     // ======================
     // GUI Utility Functions
     // ======================
@@ -599,11 +693,15 @@ public class PrimaryController {
         inputB.clear();
         inputTrigo.clear();
         inputConversion.clear();
+        inputTempConversion.clear();
         inputX.clear();
         inputY.clear();
 
         fromBaseChoice.setValue("Decimal");  // default selection
         toBaseChoice.setValue("Binary");
+
+        fromTempChoice.setValue("Celsius");
+        toTempChoice.setValue("Fahrenheit");
 
         angleToggle.setSelected(false);
         angleToggle.setText("Degrees");

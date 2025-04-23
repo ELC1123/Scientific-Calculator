@@ -86,6 +86,22 @@
                </VBox>
             </Tab>
 
+            <!-- Temperature Conversions -->
+            <Tab text = "Temp. Conversions" closable = "false">
+               <VBox alignment = "CENTER" spacing = "10">
+                  <TextField fx:id = "inputTempConversion" promptText = "Enter value to convert"/>
+                  <HBox spacing = "10" alignment = "CENTER">
+                     <children>
+                        <ChoiceBox fx:id = "fromTempChoice"/>
+                        <Label text = "→"/>
+                        <ChoiceBox fx:id = "toTempChoice"/>
+                     </children>
+                  </HBox>
+
+                  <Button text= "Convert" onAction = "#handleTempConversion"/>
+               </VBox>
+            </Tab>
+
             <!-- Other Functions -->
             <Tab text = "More Functions" closable="false">
                <VBox alignment = "CENTER" spacing = "10">
