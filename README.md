@@ -22,7 +22,7 @@ A Scientific Calculator application built with JavaFX, following an MVC architec
 ## 🖥️ How to Run
 1. Clone the Repository:
 ```
-git clone https://github.com/yourusername/javafx-scientific-calculator.git
+git clone https://github.com/yourusername/scientific-calculator.git
 ```
 
 2. Navigate to the project directory.
